@@ -1,4 +1,11 @@
 spring:
   application:
     name: msp-ftp
-
+  profiles:
+    active: prop1
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://111.229.237.232:1111/eureka, http://111.229.237.232:1112/eureka

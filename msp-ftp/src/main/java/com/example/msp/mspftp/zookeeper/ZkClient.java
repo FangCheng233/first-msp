@@ -1,7 +1,5 @@
 package com.example.msp.mspftp.zookeeper;
 
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 import org.junit.Before;
 
@@ -19,11 +17,6 @@ public class ZkClient {
 
     @Before
     public void before() throws IOException {
-        zooKeeper = new ZooKeeper(ZookeeperConfiguration.CONNECT_STRING, ZookeeperConfiguration.SESSION_TIMEOUT, new Watcher() {
-            @Override
-            public void process(WatchedEvent watchedEvent) {
-
-            }
-        });
+        zooKeeper = new ZooKeeper(ZookeeperConfiguration.CONNECT_STRING, ZookeeperConfiguration.SESSION_TIMEOUT, e -> {});
     }
 }
