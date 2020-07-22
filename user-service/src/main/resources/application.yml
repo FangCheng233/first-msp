@@ -3,3 +3,7 @@ spring:
     active: prop1
   application:
     name: user-service
+  datasource:
+    url: jdbc:mysql://${datasourceConfig.addressAndPort}}/test
+    username: ${datasourceConfig.user}
+    password: ${datasourceConfig.passwd}

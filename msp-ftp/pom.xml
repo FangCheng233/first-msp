@@ -7,34 +7,22 @@
         <groupId>com.fc.msp</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.fc.msp</groupId>
-    <artifactId>msp-auth</artifactId>
+    <groupId>com.example.msp</groupId>
+    <artifactId>msp-ftp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>msp-auth</name>
+    <name>msp-ftp</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
         <java.version>1.8</java.version>
-<!--        <nacos.version>2.1.0.RELEASE</nacos.version>-->
+        <spring-cloud.version>Hoxton.SR6</spring-cloud.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zookeeper-discovery</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-        </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-alibaba-dependencies</artifactId>-->
-<!--            <version>${nacos.version}</version>-->
-<!--            <type>pom</type>-->
-<!--            <scope>import</scope>-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>
