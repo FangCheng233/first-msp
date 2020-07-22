@@ -1,1 +1,5 @@
-
+spring:
+  application:
+    name: msp-auth
+  profiles:
+    active: prop1

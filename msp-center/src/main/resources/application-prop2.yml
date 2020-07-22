@@ -1,4 +1,3 @@
-# 访问应用端口
 server:
   port: 1112
   eureka:

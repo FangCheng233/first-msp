@@ -1,6 +1,5 @@
-# 访问应用端口
 server:
   port: 1111
 eureka:
   instance:
-    instance-id: 192.168.11.12:${server.port}
+    instance-id: 127.0.0.1:${server.port}

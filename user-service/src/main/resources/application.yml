@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: prop1
+  application:
+    name: user-service
