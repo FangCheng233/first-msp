@@ -21,9 +21,9 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class ZookeeperConfiguration {
 
-    public static String CONNECT_STRING = "127.0.0.1:2181";
+    public String CONNECT_STRING = "";
 
-    public static int SESSION_TIMEOUT = 2000;
+    public int SESSION_TIMEOUT = 2000;
 
     @Value("${zk.connectURL:127.0.0.1:2181}")
     public void setConnectString(String connectString) {
@@ -33,5 +33,17 @@ public class ZookeeperConfiguration {
     @Value("${zk.sessionTimeout:2000}")
     public void setSessionTimeout(int sessionTimeout) {
         SESSION_TIMEOUT = sessionTimeout;
+    }
+
+    public String getConnectString() {
+        return CONNECT_STRING;
+    }
+
+    public int getSessionTimeout() {
+        return SESSION_TIMEOUT;
+    }
+    @PostConstruct
+    public ZookeeperConfiguration getInstance(){
+        return new ZookeeperConfiguration();
     }
 }
