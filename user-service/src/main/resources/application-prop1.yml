@@ -1,6 +1,6 @@
 server:
   port: 3333
 datasourceConfig:
-  user: test
-  passwd: MyPass@123
-  addressAndPort: 111.229.237.232:5876
+  user: root
+  passwd: rootroot
+  addressAndPort: 127.0.0.1:3306
