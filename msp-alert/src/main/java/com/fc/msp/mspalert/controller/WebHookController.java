@@ -21,6 +21,7 @@ public class WebHookController {
         request.getSession().getAttribute("");
         String alertRequest = RequestUtil.readAsBytes(request);
         System.out.println(alertRequest);
+        System.out.println(RequestUtil.alert2JSON(alertRequest));
         return "success!";
     }
 }

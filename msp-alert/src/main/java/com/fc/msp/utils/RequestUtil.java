@@ -1,5 +1,9 @@
 package com.fc.msp.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.fc.msp.mspalert.entity.Alerts;
+
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -12,10 +16,16 @@ import java.io.IOException;
  * @Version 1.0
  */
 public class RequestUtil {
-    // 二进制读取
-    public static String readAsBytes(HttpServletRequest request)
-    {
-
+    /**
+     *
+     * @Description
+     * @Author fangcheng
+     * @param request :
+     * @return java.lang.String
+     * @throws
+     * @Date 2020/7/27 10:54 上午
+     */
+    public static String readAsBytes(HttpServletRequest request) {
         int len = request.getContentLength();
         byte[] buffer = new byte[len];
         ServletInputStream in = null;
@@ -45,6 +55,19 @@ public class RequestUtil {
             }
         }
         return new String(buffer);
+    }
+    /**
+     *
+     * @Description
+     * @Author fangcheng
+     * @param alertsMsg :
+     * @return com.fc.msp.mspalert.entity.Alerts
+     * @throws
+     * @Date 2020/7/27 10:59 上午
+     */
+    public static Alerts alert2JSON(String alertsMsg){
+        Alerts alerts = JSON.parseObject(alertsMsg, Alerts.class);
+        return alerts;
     }
 
 }
