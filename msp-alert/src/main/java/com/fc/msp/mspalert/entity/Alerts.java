@@ -16,6 +16,7 @@ public class Alerts {
     private String receiver;
     @Value("${status}")
     private String status;
+    @Value("${alerts}")
     private List<Alert> alertList;
     private GroupLabels groupLabels;
     private CommonLabels commonLabels;
