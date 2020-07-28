@@ -1,4 +1,4 @@
-package com.fc.msp.admin.controller;
+package com.fc.msp.controller;
 
 import com.fc.msp.admin.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
