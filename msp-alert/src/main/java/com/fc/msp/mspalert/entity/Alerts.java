@@ -2,6 +2,7 @@ package com.fc.msp.mspalert.entity;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public class Alerts {
     @Value("${status}")
     private String status;
     @Value("${alerts}")
-    private List<Alert> alerts;
+    private ArrayList<Alert> alerts;
     private GroupLabels groupLabels;
     private CommonLabels commonLabels;
     private CommonAnnotations commonAnnotations;
@@ -51,7 +52,7 @@ public class Alerts {
      *
      * @return the value of alerts
      */
-    public List<Alert> getAlerts() {
+    public ArrayList<Alert> getAlerts() {
         return alerts;
     }
 
@@ -130,9 +131,9 @@ public class Alerts {
     /**
      * Sets the alerts. *
      * <p>You can use getAlerts() to get the value of alerts</p>
-     * * @param alertList alerts
+     * * @param alerts alerts
      */
-    public void setAlerts(List<Alert> alerts) {
+    public void setAlerts(ArrayList<Alert> alerts) {
         this.alerts = alerts;
     }
 
