@@ -17,15 +17,9 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @Date 2020/7/22 8:11 上午
  * @Version 1.0
  */
-@Controller
-@RequestMapping("/")
 @EnableEurekaClient
 @SpringBootApplication
 public class UserServiceApplication {
-    @PostMapping("getName1")
-    public String getUserName(){
-        return "123";
-    }
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class, args);
     }
