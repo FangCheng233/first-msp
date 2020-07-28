@@ -2,7 +2,6 @@ package com.fc.msp.mspalert.entity;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ public class Alerts {
     @Value("${status}")
     private String status;
     @Value("${alerts}")
-    private ArrayList<Alert> alertList;
+    private List<Alert> alerts;
     private GroupLabels groupLabels;
     private CommonLabels commonLabels;
     private CommonAnnotations commonAnnotations;
@@ -48,12 +47,12 @@ public class Alerts {
     }
 
     /**
-     * Gets the value of alertList. *
+     * Gets the value of alerts. *
      *
-     * @return the value of alertList
+     * @return the value of alerts
      */
-    public List<Alert> getAlertList() {
-        return alertList;
+    public List<Alert> getAlerts() {
+        return alerts;
     }
 
     /**
@@ -129,12 +128,12 @@ public class Alerts {
     }
 
     /**
-     * Sets the alertList. *
-     * <p>You can use getAlertList() to get the value of alertList</p>
-     * * @param alertList alertList
+     * Sets the alerts. *
+     * <p>You can use getAlerts() to get the value of alerts</p>
+     * * @param alertList alerts
      */
-    public void setAlertList(ArrayList<Alert> alertList) {
-        this.alertList = alertList;
+    public void setAlerts(List<Alert> alerts) {
+        this.alerts = alerts;
     }
 
     /**
@@ -196,7 +195,7 @@ public class Alerts {
         return "Alerts{" +
                 "receiver='" + receiver + '\'' +
                 ", status='" + status + '\'' +
-                ", alertList=" + alertList +
+                ", alerts=" + alerts +
                 ", groupLabels=" + groupLabels +
                 ", commonLabels=" + commonLabels +
                 ", commonAnnotations=" + commonAnnotations +
