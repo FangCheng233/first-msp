@@ -65,13 +65,13 @@ public class WebHookService {
      */
     public void pushMsg(Alert alert){
         String sendMSG = messageProcessing.parseAlert2MSG(alert);
-        if(alertPushConfig.getEnableEmail() == "true"){
+        if(alertPushConfig.getEnableEmail().equals("true")){
             sendMessage.sendDirectMessage(sendMSG);
         }
-        if(alertPushConfig.getEnableSMS() == "true"){
+        if(alertPushConfig.getEnableSMS().equals("true")){
 
         }
-        if(alertPushConfig.getEnableWeChat() == "true"){
+        if(alertPushConfig.getEnableWeChat().equals("true")){
 
         }
     }

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName UserConfig
@@ -21,6 +23,7 @@ public class UserConfig {
 
     private String password;
 
+    private Map<String, String> userList;
     /**
      * Gets the value of user. *
      *
@@ -59,4 +62,11 @@ public class UserConfig {
         this.password = password;
     }
 
+    public Map<String, String> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(Map<String, String> userList) {
+        this.userList = userList;
+    }
 }

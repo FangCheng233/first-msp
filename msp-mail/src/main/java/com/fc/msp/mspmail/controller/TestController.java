@@ -14,12 +14,4 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController("/")
 public class TestController {
-    @Autowired
-    MailService mailService;
-
-    @GetMapping("test")
-    public void test(){
-        mailService.send("TEST","www.2441014356@qq.com","Hello World!");
-
-    }
 }

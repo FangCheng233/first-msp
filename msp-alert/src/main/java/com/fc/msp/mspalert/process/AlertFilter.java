@@ -27,6 +27,6 @@ public class AlertFilter {
     public boolean pushFilter(Alert alert){
 
 
-        return false;
+        return true;
     }
 }

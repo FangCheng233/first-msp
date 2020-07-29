@@ -1,9 +1,14 @@
 package com.fc.msp.mspmail.mq;
 
+import com.fc.msp.mspmail.config.UserConfig;
+import com.fc.msp.mspmail.send.MailService;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.swing.text.html.HTMLDocument;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -16,10 +21,17 @@ import java.util.Map;
 @Component
 @RabbitListener(queues = "TestDirectQueue")//监听的队列名称 TestDirectQueue
 public class DirectReceiver {
+    @Autowired
+    MailService mailService;
+
+    @Autowired
+    UserConfig userConfig;
 
     @RabbitHandler
-    public void process(Map testMessage) {
-        System.out.println("DirectReceiver消费者收到消息  : " + testMessage.toString());
+    public void process(Map message) {
+        for (Map.Entry<String,String> entry: userConfig.getUserList().entrySet()){
+            mailService.send("应用系统告警",entry.getValue(),message.toString());
+        }
     }
 
 }

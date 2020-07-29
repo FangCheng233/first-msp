@@ -1,6 +1,7 @@
-package com.fc.msp.config;
+package com.fc.msp.mspmail.config;
 
 import com.ctrip.framework.apollo.Config;
+import com.ctrip.framework.apollo.enums.PropertyChangeType;
 import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfig;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
@@ -10,6 +11,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @ClassName ApolloConfiguration
@@ -22,10 +28,10 @@ import javax.annotation.PostConstruct;
 @Configuration
 public class ApolloConfiguration {
 
-    @ApolloConfig
+    @ApolloConfig("subscription")
     Config config;
-    @Autowired
-    AlertPushConfig alertPushConfig;
+    @Resource
+    UserConfig userConfig;
     @Bean
     public ApolloConfiguration ApolloConfiguration() {
         return new ApolloConfiguration();
@@ -51,27 +57,23 @@ public class ApolloConfiguration {
 
     @PostConstruct
     private void setConfig(){
-        if(config.getProperty(ConfigurationProperties.SEND_EMAIL,"") != null){
-            alertPushConfig.setEnableEmail(config.getProperty(ConfigurationProperties.SEND_EMAIL,"true"));
+        Set<String> list = config.getPropertyNames();
+        Map<String, String> map = new HashMap<>();
+        for(String user:list){
+            map.put(user, config.getProperty(user,""));
         }
-        if(config.getProperty(ConfigurationProperties.SEND_SMS,"") != null){
-            alertPushConfig.setEnableSMS(config.getProperty(ConfigurationProperties.SEND_SMS,"true"));
-        }
-        if(config.getProperty(ConfigurationProperties.SEND_WECHAT,"") != null){
-            alertPushConfig.setEnableWeChat(config.getProperty(ConfigurationProperties.SEND_WECHAT,"true"));
-        }
+        userConfig.setUserList(map);
     }
 
-    @ApolloConfigChangeListener("application")
+    @ApolloConfigChangeListener("subscription")
     private void atApolloConfigChanging(ConfigChangeEvent changeEvent){
-        if(changeEvent.isChanged(ConfigurationProperties.SEND_EMAIL)){
-            alertPushConfig.setEnableEmail(config.getProperty(ConfigurationProperties.SEND_EMAIL,"true"));
-        }
-        if(changeEvent.isChanged(ConfigurationProperties.SEND_SMS)){
-            alertPushConfig.setEnableSMS(config.getProperty(ConfigurationProperties.SEND_SMS,"true"));
-        }
-        if(changeEvent.isChanged(ConfigurationProperties.SEND_WECHAT)){
-            alertPushConfig.setEnableWeChat(config.getProperty(ConfigurationProperties.SEND_WECHAT,"true"));
+        Set<String> list = changeEvent.changedKeys();
+        for(String user:list){
+            if(changeEvent.getChange(user).getChangeType().equals(PropertyChangeType.DELETED)){
+                userConfig.getUserList().remove(user);
+            }else {
+                userConfig.getUserList().put(user, config.getProperty(user,""));
+            }
         }
     }
 }
