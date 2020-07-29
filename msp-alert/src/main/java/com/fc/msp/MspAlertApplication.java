@@ -1,4 +1,4 @@
-package com.fc.msp.mspalert;
+package com.fc.msp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

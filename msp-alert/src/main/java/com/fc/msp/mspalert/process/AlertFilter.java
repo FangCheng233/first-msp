@@ -15,7 +15,17 @@ import java.util.List;
  */
 @Component
 public class AlertFilter {
+    /**
+     *
+     * @Description 查询数据库配置信息，对部分告警信息进行过滤处理
+     * @Author fangcheng
+     * @param alert :
+     * @return boolean
+     * @throws
+     * @Date 2020/7/29 10:33 上午
+     */
     public boolean pushFilter(Alert alert){
+
 
         return false;
     }

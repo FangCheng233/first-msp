@@ -5,6 +5,8 @@ import com.fc.msp.config.ApolloConfiguration;
 import com.fc.msp.mspalert.entity.Alert;
 import com.fc.msp.mspalert.entity.Alerts;
 import com.fc.msp.mspalert.process.AlertFilter;
+import com.fc.msp.notify.email.SendMessage;
+import com.fc.msp.utils.MessageProcessing;
 import com.fc.msp.utils.RequestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +30,12 @@ public class WebHookService {
     private static Logger log = LoggerFactory.getLogger(WebHookService.class);
     @Autowired
     AlertFilter alertFilter;
+    @Autowired
+    SendMessage sendMessage;
     @Resource
     AlertPushConfig alertPushConfig;
+    @Autowired
+    MessageProcessing messageProcessing;
     @Resource
     ApolloConfiguration apolloConfiguration;
 
@@ -58,8 +64,9 @@ public class WebHookService {
      * @Date 2020/7/29 10:16 上午
      */
     public void pushMsg(Alert alert){
+        String sendMSG = messageProcessing.parseAlert2MSG(alert);
         if(alertPushConfig.getEnableEmail() == "true"){
-
+            sendMessage.sendDirectMessage(sendMSG);
         }
         if(alertPushConfig.getEnableSMS() == "true"){
 

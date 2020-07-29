@@ -3,6 +3,11 @@ spring:
     name: msp-alert
   profiles:
     active: prop1
+  rabbitmq:
+    host: 192.168.11.20
+    port: 5672
+    username: rabbit
+    password: rabbit
 eureka:
   client:
     register-with-eureka: true
