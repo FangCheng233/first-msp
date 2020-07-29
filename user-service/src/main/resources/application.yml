@@ -4,9 +4,9 @@ spring:
   application:
     name: user-service
   datasource:
-    url: jdbc:mysql:///MSPDB?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
-    username:
-    password:
+    url: jdbc:mysql://111.229.237.232:5186/MSPDB?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    username: mspuser
+    password: MyPass@123
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:

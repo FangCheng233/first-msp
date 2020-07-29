@@ -1,8 +1,15 @@
 package com.fc.msp.mspmail.entity;
 
+import java.io.Serializable;
 import java.util.Date;
-
-public class User {
+/**
+ *@ClassName User
+ *@Description TODO
+ *@Author fangcheng
+ *@Date 2020/7/29 5:50 下午
+ *@Version 1.0
+ */
+public class User implements Serializable {
     private Integer id;
 
     private String username;

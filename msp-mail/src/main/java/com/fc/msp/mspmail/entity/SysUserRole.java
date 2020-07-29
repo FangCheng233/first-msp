@@ -1,6 +1,14 @@
 package com.fc.msp.mspmail.entity;
 
-public class SysUserRole {
+import java.io.Serializable;
+/**
+ *@ClassName SysUserRole
+ *@Description TODO
+ *@Author fangcheng
+ *@Date 2020/7/29 5:50 下午
+ *@Version 1.0
+ */
+public class SysUserRole implements Serializable {
     private Integer userId;
 
     private Integer roleId;

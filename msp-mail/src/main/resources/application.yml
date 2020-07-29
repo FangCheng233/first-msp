@@ -3,10 +3,15 @@ spring:
     name: msp-mail
   profiles:
     active: prop1
+  rabbitmq:
+    host: 192.168.11.20
+    port: 5672
+    username: rabbit
+    password: rabbit
   datasource:
-    url: jdbc:mysql:///MSPDB?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
-    username: 
-    password:
+    url: jdbc:mysql://111.229.237.232:5186/MSPDB?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    username: mspuser
+    password: MyPass@123
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
@@ -23,5 +28,5 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://:1111/eureka, http://:1112/eureka
+      defaultZone: http://111.229.237.232:1111/eureka, http://111.229.237.232:1112/eureka
 
