@@ -1,6 +1,11 @@
 package com.fc.msp.mspalert.controller;
 
+import com.fc.msp.mspalert.service.WebHookService;
 import com.fc.msp.utils.RequestUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,15 +18,19 @@ import javax.servlet.http.HttpServletRequest;
  * @Date 2020/7/26 5:10 下午
  * @Version 1.0
  */
+@Lazy
 @RestController("/")
 public class WebHookController {
+    Logger log = LoggerFactory.getLogger(WebHookController.class);
+    @Autowired
+    private WebHookService webHookService;
 
     @PostMapping("webHook")
     public String webHook(HttpServletRequest request){
         request.getSession().getAttribute("");
         String alertRequest = RequestUtil.readAsBytes(request);
-        System.out.println(alertRequest);
-        System.out.println(RequestUtil.alert2JSON(alertRequest));
+        log.info(alertRequest);
+        webHookService.dealwithMsg(alertRequest);
         return "success!";
     }
 }

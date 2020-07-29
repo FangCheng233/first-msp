@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 public class Alert {
     @Value("${status}")
     private String status;
+    @Value("${labels}")
+    private String labels;
     @Value("${annotations}")
     private Annotations annotations;
     @Value("${startsAt}")
@@ -28,6 +30,24 @@ public class Alert {
      */
     public String getStatus() {
         return status;
+    }
+
+    /**
+     * Gets the value of labels. *
+     *
+     * @return the value of labels
+     */
+    public String getLabels() {
+        return labels;
+    }
+
+    /**
+     * Sets the labels. *
+     * <p>You can use getLabels() to get the value of labels</p>
+     * * @param labels labels
+     */
+    public void setLabels(String labels) {
+        this.labels = labels;
     }
 
     /**
