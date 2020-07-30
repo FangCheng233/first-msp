@@ -9,6 +9,7 @@ first-msp
     用于用户权限统一验证服务，包括交易授权，用户权限查询，应用登陆
 ### msp-center
     eureka注册中心服务端
+    原理：
 ### msp-ftp
     文件传输服务
 ### msp-mail
