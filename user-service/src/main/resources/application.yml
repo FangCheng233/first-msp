@@ -4,7 +4,7 @@ spring:
   application:
     name: user-service
   datasource:
-    url: jdbc:mysql://111.229.237.232:5186/MSPDB?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
+    url: jdbc:mysql://192.168.11.20:3306/MSPDB?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
     username: mspuser
     password: MyPass@123
     type: com.zaxxer.hikari.HikariDataSource
@@ -18,7 +18,6 @@ spring:
       max-lifetime: 1800000               # 连接的生命时长，超时且没有被使用则被释放，默认：30分钟
       pool-name: DataSourceHikariCP       # 连接池名称
       connection-test-query: SELECT 1
-
   servlet:
     multipart:
       max-file-size: 512000               # 文件上传大小限制
@@ -36,3 +35,13 @@ mybatis:
 pagehelper:
   helperDialect: mysql
   supportMethodsArguments: true
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://192.168.11.12:1111/eureka, http://192.168.11.13:1111/eureka
+  instance:
+    lease-expiration-duration-in-seconds: 10
+    prefer-ip-address: true

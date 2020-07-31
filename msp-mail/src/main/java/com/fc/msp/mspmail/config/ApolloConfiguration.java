@@ -76,4 +76,13 @@ public class ApolloConfiguration {
             }
         }
     }
+    @ApolloConfigChangeListener("application")
+    private void apolloConfigChanging(ConfigChangeEvent changeEvent){
+        if(changeEvent.getChange("usermail").getChangeType().equals(PropertyChangeType.MODIFIED)){
+            userConfig.setUser(changeEvent.getChange("usermail").getNewValue());
+        }
+        if(changeEvent.getChange("password").getChangeType().equals(PropertyChangeType.MODIFIED)){
+            userConfig.setPassword(changeEvent.getChange("password").getNewValue());
+        }
+    }
 }
