@@ -19,13 +19,30 @@ public class AlertInfo implements Serializable {
     /**
      * @Description
      */
-    @Column
+    @Column(name = "ALERT_NAME")
+    private String alertName;
+
+    /**
+     * @Description
+     */
+    @Column(name = "SYSTEM")
+    private String system;
+
+    /**
+     * @Description
+     */
+    @Column(name = "DESCRIPTION")
+    private String description;
+    /**
+     * @Description
+     */
+    @Column(name = "STATUS")
     private String status;
     /**
      * @Description
      */
-    @Column(name = "ALERT_MSG")
-    private String alertMsg;
+    @Column(name = "ALERT_MSG_ID")
+    private String alertMsgId;
 
     /**
      * Gets the value of ID. *
@@ -45,29 +62,5 @@ public class AlertInfo implements Serializable {
         this.ID = ID;
     }
 
-    /**
-     * Gets the value of alertMsg. *
-     *
-     * @return the value of alertMsg
-     */
-    public String getAlertMsg() {
-        return alertMsg;
-    }
 
-    /**
-     * Sets the alertMsg. *
-     * <p>You can use getAlertMsg() to get the value of alertMsg</p>
-     * * @param alertMsg alertMsg
-     */
-    public void setAlertMsg(String alertMsg) {
-        this.alertMsg = alertMsg;
-    }
-
-    @Override
-    public String toString() {
-        return "AlertInfo{" +
-                "ID='" + ID + '\'' +
-                ", alertMsg='" + alertMsg + '\'' +
-                '}';
-    }
 }
