@@ -3,6 +3,12 @@ spring:
     active: prop1
   application:
     name: msp-center
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://192.168.11.12:1111/eureka, http://192.168.11.13:1111/eureka
   server:
     enable-self-preservation: true
     renewal-percent-threshold: 0.85
@@ -12,9 +18,3 @@ spring:
   instance:
     lease-expiration-duration-in-seconds: 10
     prefer-ip-address: true
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://192.168.11.12:1111/eureka, http://192.168.11.13:1111/eureka

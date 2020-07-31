@@ -9,3 +9,6 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://192.168.11.12:1111/eureka, http://192.168.11.13:1111/eureka
+  instance:
+    lease-expiration-duration-in-seconds: 10
+    prefer-ip-address: true
