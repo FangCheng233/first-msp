@@ -4,10 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>user-service</module>
+        <module>msp-alert</module>
         <module>msp-auth</module>
         <module>msp-center</module>
         <module>msp-ftp</module>
+        <module>msp-logger</module>
+        <module>msp-mail</module>
+        <module>msp-sso</module>
+        <module>user-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

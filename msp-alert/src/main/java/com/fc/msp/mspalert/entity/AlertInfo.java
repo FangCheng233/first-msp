@@ -45,6 +45,12 @@ public class AlertInfo implements Serializable {
     private String alertMsgId;
 
     /**
+     * @Description
+     */
+    @Column(name = "CREATE_TIME")
+    private String createTime;
+
+    /**
      * Gets the value of ID. *
      *
      * @return the value of ID
@@ -62,5 +68,124 @@ public class AlertInfo implements Serializable {
         this.ID = ID;
     }
 
+    /**
+     * Gets the value of alertName. *
+     *
+     * @return the value of alertName
+     */
+    public String getAlertName() {
+        return alertName;
+    }
 
+    /**
+     * Sets the alertName. *
+     * <p>You can use getAlertName() to get the value of alertName</p>
+     * * @param alertName alertName
+     */
+    public void setAlertName(String alertName) {
+        this.alertName = alertName;
+    }
+
+    /**
+     * Gets the value of system. *
+     *
+     * @return the value of system
+     */
+    public String getSystem() {
+        return system;
+    }
+
+    /**
+     * Sets the system. *
+     * <p>You can use getSystem() to get the value of system</p>
+     * * @param system system
+     */
+    public void setSystem(String system) {
+        this.system = system;
+    }
+
+    /**
+     * Gets the value of description. *
+     *
+     * @return the value of description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Sets the description. *
+     * <p>You can use getDescription() to get the value of description</p>
+     * * @param description description
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * Gets the value of status. *
+     *
+     * @return the value of status
+     */
+    public String getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets the status. *
+     * <p>You can use getStatus() to get the value of status</p>
+     * * @param status status
+     */
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    /**
+     * Gets the value of alertMsgId. *
+     *
+     * @return the value of alertMsgId
+     */
+    public String getAlertMsgId() {
+        return alertMsgId;
+    }
+
+    /**
+     * Sets the alertMsgId. *
+     * <p>You can use getAlertMsgId() to get the value of alertMsgId</p>
+     * * @param alertMsgId alertMsgId
+     */
+    public void setAlertMsgId(String alertMsgId) {
+        this.alertMsgId = alertMsgId;
+    }
+
+    /**
+     * Gets the value of createTime. *
+     *
+     * @return the value of createTime
+     */
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    /**
+     * Sets the createTime. *
+     * <p>You can use getCreateTime() to get the value of createTime</p>
+     * * @param createTime createTime
+     */
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "AlertInfo{" +
+                "ID='" + ID + '\'' +
+                ", alertName='" + alertName + '\'' +
+                ", system='" + system + '\'' +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                ", alertMsgId='" + alertMsgId + '\'' +
+                ", createTime='" + createTime + '\'' +
+                '}';
+    }
 }
