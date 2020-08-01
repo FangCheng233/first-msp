@@ -6,6 +6,7 @@ import com.fc.msp.mspalert.entity.Alerts;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 /**
@@ -26,35 +27,17 @@ public class RequestUtil {
      * @Date 2020/7/27 10:54 上午
      */
     public static String readAsBytes(HttpServletRequest request) {
-        int len = request.getContentLength();
-        byte[] buffer = new byte[len];
-        ServletInputStream in = null;
-
-        try
-        {
-            in = request.getInputStream();
-            in.read(buffer, 0, len);
-            in.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            if (null != in)
-            {
-                try
-                {
-                    in.close();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
+        StringBuffer jb = new StringBuffer();
+        String line = null;
+        try {
+            BufferedReader reader = request.getReader();
+            while ((line = reader.readLine()) != null){
+                jb.append(line);
             }
+        } catch (Exception e) {
+            /*report an error*/
         }
-        return new String(buffer);
+        return new String(jb);
     }
     /**
      *
