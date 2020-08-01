@@ -1,8 +1,6 @@
 package com.fc.msp.mspalert.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -15,7 +13,9 @@ import java.io.Serializable;
 public class AlertMsgInfo implements Serializable {
     private static final long serialVersionUID = 1435521231412243545L;
     @Id
-    private String ID;
+    @Column(name = "ID")
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Integer id;
 
     @Column(name = "ALERT_MSG")
     private String alertMsg;
@@ -25,8 +25,8 @@ public class AlertMsgInfo implements Serializable {
      *
      * @return the value of ID
      */
-    public String getID() {
-        return ID;
+    public Integer getId() {
+        return id;
     }
 
     /**
@@ -34,8 +34,8 @@ public class AlertMsgInfo implements Serializable {
      * <p>You can use getID() to get the value of ID</p>
      * * @param ID ID
      */
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setID(Integer id) {
+        this.id = id;
     }
 
     /**

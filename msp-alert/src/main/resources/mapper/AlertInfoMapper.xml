@@ -2,26 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fc.msp.mspalert.mapper.AlertInfoMapper">
   <resultMap id="BaseResultMap" type="com.fc.msp.mspalert.entity.AlertInfo">
-    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="ALERT_NAME" jdbcType="VARCHAR" property="alertName" />
-    <result column="SYSTEM" jdbcType="VARCHAR" property="system" />
+    <result column="SYSTEM_ID" jdbcType="VARCHAR" property="systemId" />
     <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
     <result column="STATUS" jdbcType="VARCHAR" property="status" />
-    <result column="ALERT_MSG_ID" jdbcType="VARCHAR" property="alertMsgId" />
-    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="ALERT_MSG_ID" jdbcType="INTEGER" property="alertMsgId" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
     ID, ALERT_NAME, SYSTEM, DESCRIPTION, STATUS, ALERT_MSG_ID, CREATE_TIME
   </sql>
-  <insert id="insert" parameterType="com.fc.msp.mspalert.entity.AlertInfo">
-    insert into user (ID, ALERT_NAME, SYSTEM, DESCRIPTION, STATUS, ALERT_MSG_ID, CREATE_TIME)
+  <insert id="insert" parameterType="com.fc.msp.mspalert.entity.AlertInfo" useGeneratedKeys="true" keyProperty="id">
+    insert into ALERT_INFO (ID, ALERT_NAME, SYSTEM_ID, DESCRIPTION, STATUS, ALERT_MSG_ID, CREATE_TIME)
     values (
-    #{id,jdbcType=VARCHAR},
+    #{id,jdbcType=INTEGER},
     #{alertName,jdbcType=VARCHAR},
-    #{system,jdbcType=VARCHAR},
+    #{systemId,jdbcType=VARCHAR},
     #{description,jdbcType=VARCHAR},
     #{status,jdbcType=VARCHAR},
-    #{alertMsgId,jdbcType=VARCHAR},
-    #{createTime,jdbcType=TIMESTAMP})
+    #{alertMsgId,jdbcType=INTEGER},
+    #{createTime,jdbcType=VARCHAR})
   </insert>
 </mapper>

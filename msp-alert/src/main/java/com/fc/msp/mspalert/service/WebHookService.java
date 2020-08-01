@@ -1,5 +1,6 @@
 package com.fc.msp.mspalert.service;
 
+import com.alibaba.fastjson.JSONException;
 import com.fc.msp.config.AlertPushConfig;
 import com.fc.msp.config.ApolloConfiguration;
 import com.fc.msp.config.ConfigurationProperties;
@@ -52,16 +53,17 @@ public class WebHookService {
 
     private static String STATUS = "0";
     @Async
-    public void dealwithMsg(String alertMsg){
+    public void dealWithMsg(String alertMsg){
         Alerts alerts = parseAlertMsg2Alerts(alertMsg);
         boolean isAvailable = verifyAlerts(alerts);
         if(!isAvailable){
             log.info("告警信息为空，该条告警不做后续处理");
+            return;
         }
         AlertMsgInfo alertMsgInfo = new AlertMsgInfo();
         alertMsgInfo.setAlertMsg(alertMsg);
         alertMsgInfoMapper.insert(alertMsgInfo);
-        String alertMsgId = alertMsgInfo.getID();
+        Integer alertMsgId = alertMsgInfo.getId();
         List<Alert> alertList = alerts.getAlerts();
         for(Alert alert : alertList){
             saveAlert(alert, alertMsgId);
@@ -101,7 +103,7 @@ public class WebHookService {
      * @throws
      * @Date 2020/8/1 9:00 上午
      */
-    public void saveAlert(Alert alert, String alertMsgId){
+    public void saveAlert(Alert alert, Integer alertMsgId){
         AlertInfo alertInfo = new AlertInfo();
         alertInfo.setDescription(alert.getAnnotations().getDescription());
         alertInfo.setAlertName(alert.getLabels().getAlertname());
@@ -122,7 +124,9 @@ public class WebHookService {
      * @Date 2020/7/29 9:42 上午
      */
     public boolean verifyAlerts(Alerts alerts){
-
+        if(alerts == null){
+            return false;
+        }
         if (alerts.getAlerts() == null){
             return false;
         }
@@ -138,7 +142,12 @@ public class WebHookService {
      * @Date 2020/7/29 9:35 上午
      */
     public Alerts parseAlertMsg2Alerts(String alertMsg){
-        Alerts alerts = RequestUtil.alert2JSON(alertMsg);
+        Alerts alerts = null;
+        try {
+            alerts = RequestUtil.alert2JSON(alertMsg);
+        }catch (JSONException e){
+            log.warn("parse alertMsg failed");
+        }
         return alerts;
     }
 }

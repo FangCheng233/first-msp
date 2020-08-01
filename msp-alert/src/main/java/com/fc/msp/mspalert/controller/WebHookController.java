@@ -27,10 +27,12 @@ public class WebHookController {
 
     @PostMapping("webHook")
     public String webHook(HttpServletRequest request){
-        request.getSession().getAttribute("");
+        /**
+        * 可添加对来源的校验
+        */
         String alertRequest = RequestUtil.readAsBytes(request);
         log.info(alertRequest);
-        webHookService.dealwithMsg(alertRequest);
+        webHookService.dealWithMsg(alertRequest);
         return "success!";
     }
 }

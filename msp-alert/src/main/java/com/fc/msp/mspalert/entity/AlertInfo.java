@@ -1,8 +1,6 @@
 package com.fc.msp.mspalert.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -15,7 +13,9 @@ import java.io.Serializable;
 public class AlertInfo implements Serializable {
     private static final long serialVersionUID = 1435521231412243545L;
     @Id
-    private String ID;
+    @Column(name = "ID")
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Integer id;
     /**
      * @Description
      */
@@ -25,8 +25,8 @@ public class AlertInfo implements Serializable {
     /**
      * @Description
      */
-    @Column(name = "SYSTEM")
-    private String system;
+    @Column(name = "SYSTEM_ID")
+    private String systemId;
 
     /**
      * @Description
@@ -42,7 +42,7 @@ public class AlertInfo implements Serializable {
      * @Description
      */
     @Column(name = "ALERT_MSG_ID")
-    private String alertMsgId;
+    private Integer alertMsgId;
 
     /**
      * @Description
@@ -55,8 +55,8 @@ public class AlertInfo implements Serializable {
      *
      * @return the value of ID
      */
-    public String getID() {
-        return ID;
+    public Integer getId() {
+        return id;
     }
 
     /**
@@ -64,8 +64,8 @@ public class AlertInfo implements Serializable {
      * <p>You can use getID() to get the value of ID</p>
      * * @param ID ID
      */
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
@@ -91,8 +91,8 @@ public class AlertInfo implements Serializable {
      *
      * @return the value of system
      */
-    public String getSystem() {
-        return system;
+    public String getSystemId() {
+        return systemId;
     }
 
     /**
@@ -100,8 +100,8 @@ public class AlertInfo implements Serializable {
      * <p>You can use getSystem() to get the value of system</p>
      * * @param system system
      */
-    public void setSystem(String system) {
-        this.system = system;
+    public void setSystemId(String systemId) {
+        this.systemId = systemId;
     }
 
     /**
@@ -145,7 +145,7 @@ public class AlertInfo implements Serializable {
      *
      * @return the value of alertMsgId
      */
-    public String getAlertMsgId() {
+    public Integer getAlertMsgId() {
         return alertMsgId;
     }
 
@@ -154,7 +154,7 @@ public class AlertInfo implements Serializable {
      * <p>You can use getAlertMsgId() to get the value of alertMsgId</p>
      * * @param alertMsgId alertMsgId
      */
-    public void setAlertMsgId(String alertMsgId) {
+    public void setAlertMsgId(Integer alertMsgId) {
         this.alertMsgId = alertMsgId;
     }
 
@@ -179,9 +179,9 @@ public class AlertInfo implements Serializable {
     @Override
     public String toString() {
         return "AlertInfo{" +
-                "ID='" + ID + '\'' +
+                "id='" + id + '\'' +
                 ", alertName='" + alertName + '\'' +
-                ", system='" + system + '\'' +
+                ", systemId='" + systemId + '\'' +
                 ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
                 ", alertMsgId='" + alertMsgId + '\'' +

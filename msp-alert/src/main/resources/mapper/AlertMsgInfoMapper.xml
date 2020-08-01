@@ -2,16 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fc.msp.mspalert.mapper.AlertMsgInfoMapper">
   <resultMap id="BaseResultMap" type="com.fc.msp.mspalert.entity.AlertMsgInfo">
-    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <id column="ID" jdbcType="INTEGER" property="id" />
     <result column="ALERT_MSG" jdbcType="VARCHAR" property="alertMsg" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, ALERT_MSG_ID
+    ID, ALERT_MSG
   </sql>
-  <insert id="insert" parameterType="com.fc.msp.mspalert.entity.AlertMsgInfo">
-    insert into user (ID, ALERT_NAME, SYSTEM, DESCRIPTION, STATUS, ALERT_MSG_ID, CREATE_TIME)
+  <insert id="insert" parameterType="com.fc.msp.mspalert.entity.AlertMsgInfo" useGeneratedKeys="true" keyProperty="id">
+    insert into ALERT_MSG_INFO (ID, ALERT_MSG)
     values (
-    #{id,jdbcType=VARCHAR},
+    #{id,jdbcType=INTEGER},
     #{alertMsg,jdbcType=VARCHAR})
   </insert>
 </mapper>
