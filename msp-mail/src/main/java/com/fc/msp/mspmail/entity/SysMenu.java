@@ -1,14 +1,6 @@
 package com.fc.msp.mspmail.entity;
 
-import java.io.Serializable;
-/**
- *@ClassName SysMenu
- *@Description TODO
- *@Author fangcheng
- *@Date 2020/7/29 5:57 下午
- *@Version 1.0
- */
-public class SysMenu implements Serializable {
+public class SysMenu {
     private Integer menuid;
 
     private Integer parentid;

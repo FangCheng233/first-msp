@@ -2,6 +2,9 @@ first-msp
 =
     测试用项目
 技术栈：[Spring Boot]( https://spring.io/projects/spring-boot )、[Eureka](https://spring.io/projects/spring-cloud-netflix )、[Apollo]( https://github.com/ctripcorp/apollo/wiki/Apollo%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E4%BB%8B%E7%BB%8D )、[Zookeeper]( https://spring.io/projects/spring-cloud-zookeeper )、[Redis]( https://spring.io/projects/spring-data-redis )、[RabbitMQ]( https://www.rabbitmq.com/ )
+    
+    注意事项：对所有系统配置文件修改需要用户权限控制
+    
 ### msp-alert
     配合prometheus，alertmanager使用，监控微服务应用状态，将prometheus告警信息通过短信、邮件、微信等通知方式告知应用所有者
     实现逻辑：
@@ -18,3 +21,12 @@ first-msp
     单点登录
 ### msp-service
     微服务业务应用
+    
+=
+### 心得
+     应用架构发展历程：
+     mvc架构
+     rpc架构
+     soa架构
+     微服务架构
+     

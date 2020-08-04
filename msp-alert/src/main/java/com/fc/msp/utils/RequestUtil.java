@@ -52,5 +52,4 @@ public class RequestUtil {
         Alerts alerts = JSON.parseObject(alertsMsg, Alerts.class);
         return alerts;
     }
-
 }

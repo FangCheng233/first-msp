@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Date 2020/7/26 5:10 下午
  * @Version 1.0
  */
-@Lazy
+
 @RestController("/")
 public class WebHookController {
     Logger log = LoggerFactory.getLogger(WebHookController.class);
@@ -32,7 +32,9 @@ public class WebHookController {
         */
         String alertRequest = RequestUtil.readAsBytes(request);
         log.info(alertRequest);
-        webHookService.dealWithMsg(alertRequest);
+        for(int i = 0; i<10000; i++){
+            webHookService.dealWithMsg(alertRequest);
+        }
         return "success!";
     }
 }

@@ -57,7 +57,7 @@ public class UserConfig {
      * <p>You can use getPassword() to get the value of password</p>
      * * @param password password
      */
-    @Value("${password:286500543@qq.com}")
+    @Value("${password}")
     public void setPassword(String password) {
         this.password = password;
     }
