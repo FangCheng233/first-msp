@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -32,6 +33,7 @@ import java.util.List;
  * @Version 1.0
  */
 @Component
+@Transactional(rollbackFor = Exception.class)
 public class WebHookService {
 
     private static Logger log = LoggerFactory.getLogger(WebHookService.class);

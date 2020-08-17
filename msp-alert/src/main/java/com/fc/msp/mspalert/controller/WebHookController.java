@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController("/")
 public class WebHookController {
     Logger log = LoggerFactory.getLogger(WebHookController.class);
-    @Autowired
+    @Autowired()
     private WebHookService webHookService;
 
     @PostMapping("webHook")

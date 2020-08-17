@@ -30,7 +30,6 @@ public class Message implements Serializable {
      * <p>You can use getMessage() to get the value of message</p>
      * * @param message message
      */
-    @Value("${messagesss}")
     public void setMessage(String message) {
         this.message = message;
     }

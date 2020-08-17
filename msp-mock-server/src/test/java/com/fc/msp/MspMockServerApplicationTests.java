@@ -1,14 +1,13 @@
-package com.fc.msp.mspalert;
+package com.fc.msp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MspAlertApplicationTests {
+class MspMockServerApplicationTests {
 
     @Test
     void contextLoads() {
-
     }
 
 }

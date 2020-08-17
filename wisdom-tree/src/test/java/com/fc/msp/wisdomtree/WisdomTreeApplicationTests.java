@@ -1,14 +1,13 @@
-package com.fc.msp.mspalert;
+package com.fc.msp.wisdomtree;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MspAlertApplicationTests {
+class WisdomTreeApplicationTests {
 
     @Test
     void contextLoads() {
-
     }
 
 }
