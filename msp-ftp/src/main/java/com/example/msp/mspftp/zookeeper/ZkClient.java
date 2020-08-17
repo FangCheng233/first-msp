@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -20,10 +21,11 @@ import java.util.List;
  * @Date 2020/7/22 1:40 下午
  * @Version 1.0
  */
-public class ZkClient {
-    private ZooKeeper zkClient;
 
-    public static String CONNECT_STRING = "192.168.11.17:2181,192.168.11.18:2181,192.168.11.19:2181";
+public class ZkClient {
+    private static ZooKeeper zkClient;
+
+    public static String CONNECT_STRING = "192.168.1.103:12181,192.168.1.103:22181,192.168.1.103:32181";
 
     public static int SESSION_TIMEOUT = 60000;
 
@@ -54,4 +56,12 @@ public class ZkClient {
         System.out.println(new String(data));
     }
 
+    /**
+     * Gets the value of zkClient. *
+     *
+     * @return the value of zkClient
+     */
+    public static ZooKeeper getZkClient() {
+        return zkClient;
+    }
 }

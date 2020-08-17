@@ -1,5 +1,7 @@
 package com.fc.msp.config;
 
+import java.text.SimpleDateFormat;
+
 /**
  * @ClassName ConfigurationProperties
  * @Description TODO
@@ -9,6 +11,7 @@ package com.fc.msp.config;
  */
 
 public class ConfigurationProperties {
+    public static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss:SSS");
     /**
      * 邮件相关配置
      */

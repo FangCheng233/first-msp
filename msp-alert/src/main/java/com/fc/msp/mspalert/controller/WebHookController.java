@@ -18,19 +18,23 @@ import javax.servlet.http.HttpServletRequest;
  * @Date 2020/7/26 5:10 下午
  * @Version 1.0
  */
-@Lazy
+
 @RestController("/")
 public class WebHookController {
     Logger log = LoggerFactory.getLogger(WebHookController.class);
-    @Autowired
+    @Autowired()
     private WebHookService webHookService;
 
     @PostMapping("webHook")
     public String webHook(HttpServletRequest request){
-        request.getSession().getAttribute("");
+        /**
+        * 可添加对来源的校验
+        */
         String alertRequest = RequestUtil.readAsBytes(request);
         log.info(alertRequest);
-        webHookService.dealwithMsg(alertRequest);
+        for(int i = 0; i<10000; i++){
+            webHookService.dealWithMsg(alertRequest);
+        }
         return "success!";
     }
 }

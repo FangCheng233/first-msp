@@ -13,7 +13,7 @@ public class Alert {
     @Value("${status}")
     private String status;
     @Value("${labels}")
-    private String labels;
+    private Labels labels;
     @Value("${annotations}")
     private Annotations annotations;
     @Value("${startsAt}")
@@ -37,7 +37,7 @@ public class Alert {
      *
      * @return the value of labels
      */
-    public String getLabels() {
+    public Labels getLabels() {
         return labels;
     }
 
@@ -46,7 +46,7 @@ public class Alert {
      * <p>You can use getLabels() to get the value of labels</p>
      * * @param labels labels
      */
-    public void setLabels(String labels) {
+    public void setLabels(Labels labels) {
         this.labels = labels;
     }
 
