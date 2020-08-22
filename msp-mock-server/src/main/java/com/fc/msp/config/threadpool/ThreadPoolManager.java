@@ -1,10 +1,10 @@
 package com.fc.msp.config.threadpool;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.*;
 
 /**
  * @ClassName ThreadPoolManager
@@ -13,9 +13,10 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @Date 2020/8/20 9:14 下午
  * @Version 1.0
  */
+@Slf4j
 public class ThreadPoolManager {
 
-    private static HashMap<String, ExecutorService> threadPools = new HashMap<>(16);
+    private volatile static HashMap<String, ExecutorService> threadPools = new HashMap<>(16);
     /**
      *
      * @Description
@@ -25,12 +26,29 @@ public class ThreadPoolManager {
      * @throws
      * @Date 2020/8/21 3:45 下午
      */
-    @PostConstruct
-    private void createPools(){
+    public static void createPools(){
         /**
          * 暂时使用executors创建
          *
          * */
-        ExecutorService executorService = Executors.newFixedThreadPool(20);
+        ExecutorService http = new ThreadPoolExecutor(75, 100,
+                0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<Runnable>());
+        log.info("Tcp线程池创建完成");
+        ExecutorService tcp = new ThreadPoolExecutor(75, 100,
+                0L, TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<Runnable>());
+        log.info("Http线程池创建完成");
+        threadPools.put("HttpPools", http);
+        threadPools.put("TcpPools", tcp);
+    }
+
+    /**
+     * Gets the value of threadPools. *
+     *
+     * @return the value of threadPools
+     */
+    public static HashMap<String, ExecutorService> getThreadPools() {
+        return threadPools;
     }
 }

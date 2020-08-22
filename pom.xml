@@ -10,8 +10,10 @@
         <module>msp-ftp</module>
         <module>msp-logger</module>
         <module>msp-mail</module>
+        <module>msp-mock-server</module>
         <module>msp-sso</module>
         <module>user-service</module>
+        <module>wisdom-tree</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -32,10 +34,10 @@
 
     <dependencies>
         <!-- 服务发现 -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
@@ -65,6 +67,7 @@
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>

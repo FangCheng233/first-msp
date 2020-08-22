@@ -1,8 +1,8 @@
-package com.fc.msp.filter;
+package com.fc.msp.protocol.http;
 
-import com.fc.msp.service.MockService;
+import com.fc.msp.config.threadpool.ThreadPoolManager;
+import com.fc.msp.service.impl.HttpProcessService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -13,18 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @ClassName HTTPFiter
- * @Description OncePerRequestFilter 实现了filter接口 Spring对filter进行封装处理
+ * @ClassName HttpHandler
+ * @Description TODO
  * @Author fangcheng
- * @Date 2020/8/21 11:03 上午
+ * @Date 2020/8/21 2:56 下午
  * @Version 1.0
  */
 @Slf4j
 @Component
-public class HTTPFilter extends OncePerRequestFilter {
-
-    @Autowired
-    private MockService mockService;
+public class HttpReceiveHandler extends OncePerRequestFilter {
 
     @Override
     protected boolean isAsyncDispatch(HttpServletRequest request) {
@@ -73,8 +70,8 @@ public class HTTPFilter extends OncePerRequestFilter {
      */
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        String method = httpServletRequest.getMethod();//获取请求类型
-        String url = httpServletRequest.getServletPath();//获取请求路径
-        mockService.handlerRequest(httpServletRequest, httpServletResponse);
+        HttpProcessService.getHttpProcessService().handlerRequest(httpServletRequest, httpServletResponse);
+//        ThreadPoolManager.getThreadPools().get("HttpPools").execute(new HttpServerStarter(httpServletRequest,httpServletResponse));
     }
+
 }
