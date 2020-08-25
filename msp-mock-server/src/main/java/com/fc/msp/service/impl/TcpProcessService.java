@@ -44,6 +44,7 @@ public class TcpProcessService implements IService {
         String messageId = ApolloConfigurationListener.getTcpMsgs().get(port);
         String response = new TcpResponseMessage().createMessage(messageId);
         // 在当前场景下，发送的数据必须转换成ByteBuf数组
+        log.info("响应的消息为{}", response);
         ByteBuf encoded = ctx.alloc().buffer(4 * response.length());
         encoded.writeBytes(response.getBytes());
         ctx.write(encoded);

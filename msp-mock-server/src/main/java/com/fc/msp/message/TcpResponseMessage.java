@@ -18,9 +18,7 @@ public class TcpResponseMessage implements MessageFactory{
     private static Map<String, String> map = ApolloConfigurationListener.getResponseData();
     @Override
     public String createMessage(String resMsg) {
-        StringBuffer res = new StringBuffer();
-        res.append(map.get(resMsg));
-        return res.toString();
+        return map.get(resMsg);
     }
 
     @Override

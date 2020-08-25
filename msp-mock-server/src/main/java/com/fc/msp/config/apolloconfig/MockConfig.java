@@ -14,7 +14,7 @@ import java.util.Objects;
  * @Version 1.0
  */
 @Resource
-public class MockConfig extends BaseConfig{
+public class MockConfig extends BaseConfig implements Comparable<MockConfig>{
     /**
      * @Description GET/POST/PUT/DELETE
      */
@@ -157,9 +157,9 @@ public class MockConfig extends BaseConfig{
         MockConfig that = (MockConfig) o;
         return responseStatus == that.responseStatus &&
                 port == that.port &&
-                method.equals(that.method) &&
-                url.equals(that.url) &&
-                contentType.equals(that.contentType) &&
+                Objects.equals(method, that.method) &&
+                Objects.equals(url, that.url) &&
+                Objects.equals(contentType, that.contentType) &&
                 Arrays.equals(responseHeader, that.responseHeader);
     }
 
@@ -168,5 +168,16 @@ public class MockConfig extends BaseConfig{
         int result = Objects.hash(method, url, contentType, responseStatus, port);
         result = 31 * result + Arrays.hashCode(responseHeader);
         return result;
+    }
+
+    @Override
+    public int compareTo(MockConfig o) {
+        MockConfig that = o;
+        if(getName() == that.getName()){
+            return 0;
+        }else if(getPort()<that.getPort()){
+            return -1;
+        }
+        return 1;
     }
 }

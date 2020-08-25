@@ -1,11 +1,8 @@
 package com.fc.msp.protocol.http;
 
+import com.fc.msp.config.apolloconfig.MockConfig;
 import com.fc.msp.service.impl.HttpProcessService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @ClassName HandleRequest
@@ -14,19 +11,19 @@ import javax.servlet.http.HttpServletResponse;
  * @Date 2020/8/22 8:55 下午
  * @Version 1.0
  */
-
+@Slf4j
 public class HttpServerStarter implements Runnable {
 
-    private HttpServletRequest httpServletRequest;
-    private HttpServletResponse httpServletResponse;
+    private MockConfig mockConfig;
 
-    public HttpServerStarter(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-        this.httpServletRequest = httpServletRequest;
-        this.httpServletResponse = httpServletResponse;
+    public HttpServerStarter(MockConfig mockConfig) {
+        this.mockConfig = mockConfig;
     }
 
     @Override
     public void run() {
-        HttpProcessService.getHttpProcessService().handlerRequest(httpServletRequest, httpServletResponse);
+        log.info("HttpServerStarter" + Thread.currentThread().getName());
+        Thread.currentThread().setName("Http-Thread-" + mockConfig.getName());
+        new HttpServerService(mockConfig).startJetty();
     }
 }

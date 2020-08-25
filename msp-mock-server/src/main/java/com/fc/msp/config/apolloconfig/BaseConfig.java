@@ -11,11 +11,15 @@ import java.io.Serializable;
  */
 public class BaseConfig implements Serializable {
     /**
-     * @Description
+     * @Description 当前配置的key
+     */
+    private String name;
+    /**
+     * @Description 配置的类型 tcp/http
      */
     private String type;
     /**
-     * @Description
+     * @Description 该条配置需要响应的报文ID
      */
     private String responseMsg;
 
@@ -53,5 +57,23 @@ public class BaseConfig implements Serializable {
      */
     public void setResponseMsg(String responseMsg) {
         this.responseMsg = responseMsg;
+    }
+
+    /**
+     * Gets the value of name. *
+     *
+     * @return the value of name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sets the name. *
+     * <p>You can use getName() to get the value of name</p>
+     * * @param name name
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }

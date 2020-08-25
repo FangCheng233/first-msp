@@ -35,10 +35,12 @@ public class ThreadPoolManager {
                 0L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<Runnable>());
         log.info("Tcp线程池创建完成");
+        log.info("Tcp" + Thread.currentThread().getName());
         ExecutorService tcp = new ThreadPoolExecutor(75, 100,
                 0L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<Runnable>());
         log.info("Http线程池创建完成");
+        log.info("Http" + Thread.currentThread().getName());
         threadPools.put("HttpPools", http);
         threadPools.put("TcpPools", tcp);
     }

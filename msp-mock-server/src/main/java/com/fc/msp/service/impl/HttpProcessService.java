@@ -1,19 +1,19 @@
 package com.fc.msp.service.impl;
 
-import com.fc.msp.config.apolloconfig.ApolloConfigurationListener;
 import com.fc.msp.config.apolloconfig.MockConfig;
 import com.fc.msp.message.HttpResponseMessage;
+import com.fc.msp.protocol.ServerManager;
+import com.fc.msp.protocol.http.HttpServerService;
 import com.fc.msp.service.interfaces.IService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.eclipse.jetty.server.Request;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Map;
+import java.io.PrintWriter;
+import java.util.Set;
 
 /**
  * @ClassName MockService
@@ -25,6 +25,7 @@ import java.util.Map;
 @Slf4j
 @Component
 public class HttpProcessService implements IService {
+
     /**
      *
      * @Description 接收过滤到的请求，根据请求路径和方法判断是否需要处理
@@ -34,55 +35,47 @@ public class HttpProcessService implements IService {
      * @throws
      * @Date 2020/8/22 7:04 下午
      */
-    public void handlerRequest(HttpServletRequest request, HttpServletResponse response){
-        String method = request.getMethod();//获取请求类型
-        String url = request.getServletPath();//获取请求路径
+    public void handlerRequest(Request request, MockConfig mockConfig, HttpServletResponse servletResponse){
+        log.info("————————————接收到新的请求————————————");
+        int port = request.getMetaData().getURI().getPort();//获取请求端口
+//        String url = request.getMetaData().getURI().getPath();//获取请求路径
+//        String method = request.getMethod();//获取请求类型
         String retMSG = "";
-        log.debug("————————————接收到新的请求————————————");
-        Map<String, MockConfig> mockConfigMap = ApolloConfigurationListener.getMockConfigs();
-        for (MockConfig mockConfig : mockConfigMap.values()) {
-            if(url.equals(mockConfig.getUrl()) && method.equals(mockConfig.getMethod())){
-                retMSG = new HttpResponseMessage().createMessage(mockConfig.getResponseMsg());
-                processResponse(retMSG, mockConfig, response);
-            }else {
-                retMSG = new HttpResponseMessage().createExceptionMessage(mockConfig.getResponseMsg());
-                processResponse(retMSG, mockConfig, response);
-            }
-        }
-    }
-    public void processResponse(String msg,MockConfig mockConfig,HttpServletResponse response){
-        OutputStream outputStream = null;
+        //根据端口获取对应的server
+        Set<MockConfig> mockConfigs = ((HttpServerService)ServerManager.getServerMap().get(port)).getURL();
+        // 接收数据
+        log.info("接收到的数据为：" + readData(request));
+        retMSG = new HttpResponseMessage().createMessage(mockConfig.getResponseMsg());
+        servletResponse.setContentType("text/html; charset=utf-8");
+        servletResponse.setStatus(HttpServletResponse.SC_OK);
+        PrintWriter out = null;
         try {
-            outputStream = response.getOutputStream();
-            outputStream.write(msg.getBytes());
-            outputStream.flush();
-            outputStream.close();
-            log.debug("————————————数据处理完成————————————");
-        }catch (IOException exception){
+            out = servletResponse.getWriter();
+            out.println(retMSG);
+            request.setHandled(true);
+        }catch (IOException e){
+            log.error("——————————出大事了————————————");
+        }finally {
             try {
-                if(outputStream != null){
-                    outputStream.close();
+                if(out != null){
+                    out.close();
                 }
-            }catch (Exception e){
-                log.debug("");
+            }catch (Exception exception){
+
             }
         }
     }
-    private static volatile HttpProcessService httpProcessService;
-
-    /**
-     * Gets the value of httpProcessService. *
-     *
-     * @return the value of httpProcessService
-     */
-    public static HttpProcessService getHttpProcessService() {
-        if(httpProcessService == null){
-            synchronized (HttpProcessService.class){
-                if (httpProcessService == null){
-                    httpProcessService = new HttpProcessService();
-                }
+    public String readData(Request request){
+        StringBuffer stringBuffer =  new StringBuffer("");
+        try {
+            BufferedReader br = request.getReader();
+            String str = "";
+            while((str = br.readLine()) != null){
+                stringBuffer.append(str);
             }
+        }catch (IOException e){
+
         }
-        return httpProcessService;
+        return stringBuffer.toString();
     }
 }

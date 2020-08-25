@@ -8,6 +8,9 @@ package com.fc.msp.protocol.tcp;
  * @Version 1.0
  */
 
+import com.fc.msp.config.apolloconfig.MockConfig;
+import com.fc.msp.protocol.ServerManager;
+import com.fc.msp.service.interfaces.IService;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -16,21 +19,25 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import lombok.extern.slf4j.Slf4j;
 
-public class TcpServerService {
+@Slf4j
+public class TcpServerService implements IService {
     /**
      * 服务端口
      */
-    private static final TcpServerService serverService = new TcpServerService();
-    private TcpServerService() {
+    private int PORT;
+    private MockConfig mockConfig;
+    ChannelFuture f = null;
+    public TcpServerService(MockConfig mockConfig) {
+        this.PORT = mockConfig.getPort();
+        this.mockConfig = mockConfig;
     }
-    public static TcpServerService getInstance(){
-        return serverService;
-    }
+
     /**
      * 开启服务的方法
      */
-    public void startNetty(int port){
+    public void startNetty(){
 
         /**创建两个EventLoop的组，EventLoop 这个相当于一个处理线程，
          是Netty接收请求和处理IO请求的线程。不理解的话可以百度NIO图解*/
@@ -45,6 +52,11 @@ public class TcpServerService {
         EventLoopGroup acceptor = new NioEventLoopGroup();
         EventLoopGroup worker = new NioEventLoopGroup();
         try {
+            //检查当前端口是否开启
+            if(ServerManager.checkPort(PORT)){
+                log.info("当前端口已开启，该条tcp配置无效，");
+                return;
+            }
             //1、创建启动类
             ServerBootstrap bootstrap = new ServerBootstrap();
             //2、配置启动参数等
@@ -75,9 +87,8 @@ public class TcpServerService {
             });
 
             // 绑定端口，开始接收进来的连接
-            ChannelFuture f = bootstrap.bind(port).sync();
-
-
+            f = bootstrap.bind(PORT).sync();
+            log.info("————————————端口 {} 已开启————————————", PORT);
             // 等待服务器 socket 关闭 。
             f.channel().closeFuture().sync();
         } catch (InterruptedException e) {
@@ -87,5 +98,13 @@ public class TcpServerService {
             worker.shutdownGracefully();
         }
 
+    }
+    public void stopNetty(){
+        try {
+            f.channel().closeFuture().sync();
+            log.info("————————————端口{}已关闭————————————", PORT);
+        }catch (InterruptedException e){
+
+        }
     }
 }

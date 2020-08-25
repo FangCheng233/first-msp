@@ -7,6 +7,9 @@ import com.ctrip.framework.apollo.model.ConfigChangeEvent;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfig;
 import com.ctrip.framework.apollo.spring.annotation.ApolloConfigChangeListener;
 import com.fc.msp.config.threadpool.ThreadPoolManager;
+import com.fc.msp.protocol.ServerManager;
+import com.fc.msp.protocol.http.HttpServerService;
+import com.fc.msp.protocol.http.HttpServerStarter;
 import com.fc.msp.protocol.tcp.TcpServerService;
 import com.fc.msp.protocol.tcp.TcpServerStarter;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +36,6 @@ public class ApolloConfigurationListener {
     Config responseConfig;
 
     public volatile static Map<String, String> responseData = new ConcurrentHashMap<>(16);
-    public volatile static Map<String, MockConfig> mockConfigs = new ConcurrentHashMap<>(16);
     public volatile static Map<Integer, String> tcpMsgs = new ConcurrentHashMap<>(16);
 
     /**
@@ -45,15 +47,6 @@ public class ApolloConfigurationListener {
         return responseData;
     }
 
-
-    /**
-     * Gets the value of mockConfigs. *
-     *
-     * @return the value of mockConfigs
-     */
-    public static Map<String, MockConfig> getMockConfigs() {
-        return mockConfigs;
-    }
 
     /**
      * Gets the value of tcpMsgs. *
@@ -74,21 +67,27 @@ public class ApolloConfigurationListener {
      */
     @PostConstruct
     private void init(){
+        //初始化线程池
         ThreadPoolManager.createPools();
+        //将返回数据写入到内存中
         for (String property : responseConfig.getPropertyNames()) {
             responseData.put(property, responseConfig.getProperty(property,""));
         }
+        //根据配置的属性启动http或socket服务
         for(String service : serviceConfig.getPropertyNames()){
             MockConfig mockConfig = JSON.parseObject(serviceConfig.getProperty(service,""), MockConfig.class);
+            mockConfig.setName(service);
             if(mockConfig.getType().equalsIgnoreCase("TCP")){
                 //启动端口
-                ThreadPoolManager.getThreadPools().get("TcpPools").execute(new TcpServerStarter(mockConfig));
+//                ThreadPoolManager.getThreadPools().get("TcpPools").execute(new TcpServerStarter(mockConfig));
+                new Thread(new TcpServerStarter(mockConfig)).start();
                 tcpMsgs.put(mockConfig.getPort(), mockConfig.getResponseMsg());
-                mockConfigs.put(service, mockConfig);
             }else {
-                mockConfigs.put(service, mockConfig);
+//                ThreadPoolManager.getThreadPools().get("HttpPools").execute(new HttpServerStarter(mockConfig));
+                new Thread(new HttpServerStarter(mockConfig)).start();
             }
         }
+        log.info("应用加载完成");
     }
     /**
      *
@@ -125,35 +124,42 @@ public class ApolloConfigurationListener {
         for(String service : changeEvent.changedKeys()){
             MockConfig mockConfig = null;
             try {
+                //将字符串数据映射为java对象
                 mockConfig = JSON.parseObject(changeEvent.getChange(service).getNewValue(), MockConfig.class);
+                mockConfig.setName(service);
             }catch (Exception e){
                 log.error("数据异常");
             }
             if(changeEvent.getChange(service).getChangeType().equals(PropertyChangeType.ADDED)){
                 if(mockConfig.getType().equalsIgnoreCase("TCP")){
-                    //开启新端口
-                    TcpServerService.getInstance().startNetty(mockConfig.getPort());
+                    //开启新端口-需检查当前端口是否开启
+                    new TcpServerService(mockConfig).startNetty();
                     tcpMsgs.put(mockConfig.getPort(), mockConfig.getResponseMsg());
-                    mockConfigs.put(service, mockConfig);
                 }else {
-                    mockConfigs.put(service, mockConfig);
+                    if(!ServerManager.getServerMap().containsKey(mockConfig.getPort())){
+                        new HttpServerService(mockConfig).startJetty();
+                    }else{
+                        ((HttpServerService)ServerManager.getServerMap().get(mockConfig.getPort())).addConfig(mockConfig);
+                    }
                 }
             }else if(changeEvent.getChange(service).getChangeType().equals(PropertyChangeType.MODIFIED)){
                 if(mockConfig.getType().equalsIgnoreCase("TCP")){
-                    //仅更新map中数据
-                    mockConfigs.put(service, mockConfig);
+                    //TCP仅支持修改响应时的返回数据
+                    tcpMsgs.put(mockConfig.getPort(), mockConfig.getResponseMsg());
                 }else {
-                    mockConfigs.put(service, mockConfig);
+                    //http类型支持修改接口url和响应数据
+                    ((HttpServerService)ServerManager.getServerMap().get(mockConfig.getPort())).addConfig(mockConfig);
                 }
             }else {
                 if(mockConfig.getType().equalsIgnoreCase("TCP")){
                     //关闭端口
-                    // 删除
+                    ((TcpServerService)ServerManager.getServerMap().get(mockConfig.getPort())).stopNetty();
+                    //
                     tcpMsgs.remove(mockConfig.getPort());
                     // 删除
-                    mockConfigs.remove(service);
                 }else {
-                    mockConfigs.put(service, mockConfig);
+                    //http类型需判断调用数量
+                    ((HttpServerService)ServerManager.getServerMap().get(mockConfig.getPort())).remConfig(mockConfig);
                 }
             }
         }
