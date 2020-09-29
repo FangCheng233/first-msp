@@ -1,6 +1,9 @@
 package com.fc.msp.mspmail.entity;
 
-public class SysMenu {
+import java.io.Serializable;
+import java.util.Objects;
+
+public class SysMenu implements Serializable {
     private Integer menuid;
 
     private Integer parentid;
@@ -59,5 +62,35 @@ public class SysMenu {
 
     public void setLevel(Integer level) {
         this.level = level;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SysMenu sysMenu = (SysMenu) o;
+        return Objects.equals(menuid, sysMenu.menuid) &&
+                Objects.equals(parentid, sysMenu.parentid) &&
+                Objects.equals(menuname, sysMenu.menuname) &&
+                Objects.equals(menuurl, sysMenu.menuurl) &&
+                Objects.equals(menustatus, sysMenu.menustatus) &&
+                Objects.equals(level, sysMenu.level);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(menuid, parentid, menuname, menuurl, menustatus, level);
+    }
+
+    @Override
+    public String toString() {
+        return "SysMenu{" +
+                "menuid=" + menuid +
+                ", parentid=" + parentid +
+                ", menuname='" + menuname + '\'' +
+                ", menuurl='" + menuurl + '\'' +
+                ", menustatus='" + menustatus + '\'' +
+                ", level=" + level +
+                '}';
     }
 }

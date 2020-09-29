@@ -16,12 +16,12 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class ProxySum {
-    @Pointcut(value = "execution(* com.fc.msp..*.*(..))")
-    public void point(){
-
-    }
-    @Around(value = "point()")
-    public void t1(){
-        System.out.println(1);
-    }
+//    @Pointcut(value = "execution(* com.fc.msp..*.*(..))")
+//    public void point(){
+//
+//    }
+//    @Around(value = "point()")
+//    public void t1(){
+//        System.out.println(1);
+//    }
 }

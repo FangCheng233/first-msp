@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fc.msp.db.dao.NodeConfigMapper">
+  <resultMap id="BaseResultMap" type="com.fc.msp.db.dto.NodeConfig">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="IP" jdbcType="VARCHAR" property="ip" />
+    <result column="ENV" jdbcType="VARCHAR" property="env" />
+    <result column="VERSION" jdbcType="VARCHAR" property="version" />
+    <result column="MODE" jdbcType="VARCHAR" property="mode" />
+    <result column="OS_NAME" jdbcType="INTEGER" property="osName" />
+    <result column="OS_ARCH" jdbcType="VARCHAR" property="osArch" />
+    <result column="OS_VERSION" jdbcType="VARCHAR" property="osVersion" />
+    <result column="USER_DIR" jdbcType="VARCHAR" property="userDir" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, IP, ENV, VERSION, MODE, OS_NAME, OS_ARCH, OS_VERSION, USER_DIR
+  </sql>
+  <insert id="insert" parameterType="com.fc.msp.db.dto.NodeConfig" useGeneratedKeys="true" keyProperty="id">
+    insert into ${tableName}
+    <include refid="Base_Column_List"></include>
+    values (
+    #{id,jdbcType=INTEGER},
+    #{ip,jdbcType=VARCHAR},
+    #{env,jdbcType=VARCHAR},
+    #{version,jdbcType=VARCHAR},
+    #{mode,jdbcType=VARCHAR},
+    #{osName,jdbcType=INTEGER},
+    #{osArch,jdbcType=VARCHAR},
+    #{osVersion,jdbcType=VARCHAR},
+    #{userDir,jdbcType=VARCHAR},)
+  </insert>
+  <select id="selectByEnv" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ENVIRONMENT
+    where nodeIp = #{nodeIp,jdbcType=VARCHAR}
+  </select>
+</mapper>

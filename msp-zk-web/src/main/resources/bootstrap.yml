@@ -1,0 +1,6 @@
+configs:
+  configList:
+    - env: default
+      zkUrl: 192.168.1.103:12181,192.168.1.103:12182,192.168.1.103:12183
+      timeout: 60000
+      acl: "asda"

@@ -10,6 +10,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.session.SessionHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
 
 import java.util.Set;
@@ -58,13 +59,15 @@ public class HttpServerService implements IService {
             selectConnector.setAcceptQueueSize(2000);
             selectConnector.setPort(PORT);
             SERVER.setConnectors(new Connector[]{selectConnector});
-
+            SERVER.addConnector(selectConnector);
             SessionHandler sessionHandler = new SessionHandler();
             ServletHandler servletHandler = new ServletHandler();
             sessionHandler.getHttpOnly();
             sessionHandler.setHandler(servletHandler);
             HttpReceiveHandler receiveHandler = new HttpReceiveHandler(mockConfig);
+//            ServletContextHandler contextHandler = new ServletContextHandler();
             SERVER.setHandler(receiveHandler);
+
             ServerManager.getServerMap().put(PORT,this);
             SERVER.setStopAtShutdown(true);
             // 启动服务器

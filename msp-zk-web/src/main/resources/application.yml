@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: msp-zk-web
+  h2:
+    console:
+      path: /h2-console   # h2 web consloe 路径
+      enabled: true       # 开启 h2 web consloe，默认为 false
+      settings:
+        web-allow-others: true    #允许远程访问 h2 web consloe
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:./zkdata
+    username: sa
+    password: sa
+  servlet:
+    multipart:
+      max-file-size: 512000               # 文件上传大小限制
+      max-request-size: 512000            # 文件下载大小限制
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+  mvc:
+    static-path-pattern: /static/,/templates/
+  resources:
+    static-locations: classpath:/templates/,classpath:/static/
+server:
+  port: 8080
+mybatis:
+  type-aliases-package: com.fc.msp.db.dao
+  mapper-locations: classpath:mapper/*.xml
+audit:
+  schedule:
+    cron: 0/10 * * * * ?

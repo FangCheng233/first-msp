@@ -72,7 +72,7 @@ public class TcpServerService implements IService {
              *bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
              * */
             bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
-
+            bootstrap.option(ChannelOption.SO_KEEPALIVE, true);
             //用于构造socketchannel工厂
             bootstrap.channel(NioServerSocketChannel.class);
             /**

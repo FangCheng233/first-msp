@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fc.msp.db.dao.NodeStatusMapper">
+  <resultMap id="BaseResultMap" type="com.fc.msp.db.dto.NodeStatus">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="NODE_IP" jdbcType="VARCHAR" property="nodeIp" />
+    <result column="CONNECTIONS" jdbcType="INTEGER" property="connections" />
+    <result column="SENT" jdbcType="INTEGER" property="sent" />
+    <result column="OUTSTANDING" jdbcType="INTEGER" property="outStanding" />
+    <result column="MODE" jdbcType="VARCHAR" property="mode" />
+    <result column="NODE_COUNT" jdbcType="INTEGER" property="nodeCount" />
+    <result column="OS_MEMORY_FREE" jdbcType="VARCHAR" property="osMemoryFree" />
+    <result column="OS_MEMORY_MAX" jdbcType="VARCHAR" property="osMemoryMax" />
+    <result column="OS_MEMORY_TOTAL" jdbcType="VARCHAR" property="osMemoryTotal" />
+    <result column="DATE" jdbcType="VARCHAR" property="date" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, NODE_IP, CONNECTIONS, SENT, OUTSTANDING, MODE, NODE_COUNT, OS_MEMORY_FREE, OS_MEMORY_MAX, OS_MEMORY_MAX, OS_MEMORY_TOTAL, DATE
+  </sql>
+  <insert id="insert" parameterType="com.fc.msp.db.dto.NodeStatus" useGeneratedKeys="true" keyProperty="id">
+    insert into ${tableName}
+    <include refid="Base_Column_List"></include>
+    values (
+    #{id,jdbcType=INTEGER},
+    #{nodeIp,jdbcType=VARCHAR},
+    #{connections,jdbcType=INTEGER},
+    #{sent,jdbcType=INTEGER},
+    #{outStanding,jdbcType=INTEGER},
+    #{mode,jdbcType=VARCHAR},
+    #{nodeCount,jdbcType=INTEGER},
+    #{osMemoryFree,jdbcType=VARCHAR},
+    #{osMemoryMax,jdbcType=VARCHAR},
+    #{osMemoryTotal,jdbcType=VARCHAR},
+    #{date,jdbcType=VARCHAR},
+    )
+  </insert>
+  <select id="selectByIp" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ${tableName}
+    where nodeIp = #{nodeIp,jdbcType=VARCHAR}
+  </select>
+</mapper>
