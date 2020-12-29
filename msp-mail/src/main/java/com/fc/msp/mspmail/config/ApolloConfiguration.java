@@ -28,11 +28,11 @@ import java.util.Set;
 //@Configuration
 public class ApolloConfiguration {
 
-//    @ApolloConfig("subscription")
+    @ApolloConfig("subscription")
     Config config;
-//    @Resource
+    @Resource
     UserConfig userConfig;
-//    @Bean
+    @Bean
     public ApolloConfiguration ApolloConfiguration() {
         return new ApolloConfiguration();
     }
@@ -55,7 +55,7 @@ public class ApolloConfiguration {
         this.config = config;
     }
 
-//    @PostConstruct
+    @PostConstruct
     private void setConfig(){
         Set<String> list = config.getPropertyNames();
         Map<String, String> map = new HashMap<>();
@@ -65,7 +65,7 @@ public class ApolloConfiguration {
         userConfig.setUserList(map);
     }
 
-//    @ApolloConfigChangeListener("subscription")
+    @ApolloConfigChangeListener("subscription")
     private void atApolloConfigChanging(ConfigChangeEvent changeEvent){
         Set<String> list = changeEvent.changedKeys();
         for(String user:list){
@@ -76,7 +76,7 @@ public class ApolloConfiguration {
             }
         }
     }
-//    @ApolloConfigChangeListener("application")
+    @ApolloConfigChangeListener("application")
     private void apolloConfigChanging(ConfigChangeEvent changeEvent){
         if(changeEvent.getChange("usermail").getChangeType().equals(PropertyChangeType.MODIFIED)){
             userConfig.setUser(changeEvent.getChange("usermail").getNewValue());

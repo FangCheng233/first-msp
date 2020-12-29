@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface NodeStatusMapper extends BaseMapper<NodeStatus> {
-    @Select("select * from user where name = ?")
+
     void insert(NodeStatus nodeStatus, String tableName);
     void selectByIp(String tableName,String nodeIp);
 }

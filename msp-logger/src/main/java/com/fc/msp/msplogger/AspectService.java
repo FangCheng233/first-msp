@@ -1,5 +1,6 @@
 package com.fc.msp.msplogger;
 
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,10 @@ public class AspectService {
     @SuppressWarnings("unused")
     @Pointcut("execution (* com.ctrip.framework.apollo.internals.RemoteConfigRepository.RemoteConfigRepository())")
     private void anyMethod() {
+
+    }
+    @Around("anyMethod()")
+    private static void test(){
 
     }
 }

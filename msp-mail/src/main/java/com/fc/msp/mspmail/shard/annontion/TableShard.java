@@ -6,15 +6,27 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
+/**
+ *@ClassName TableShard
+ *@Description TODO
+ *@Author fangcheng
+ *@Date 2020/12/3 3:04 下午
+ *@Version 1.0
+ */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TableShard {
 
-    // 要替换的表名
+    /**
+     * @Description 要替换的表名
+     * @Date 2020/12/3 3:03 下午
+     */
     String tableName();
 
-    // 对应的分表策略类
+    /**
+     * @Description 对应的分表策略类
+     * @Date 2020/12/3 3:03 下午
+     */
     Class<? extends ITableShardStrategy> shardStrategy();
 
 }

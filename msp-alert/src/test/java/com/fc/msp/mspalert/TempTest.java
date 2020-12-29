@@ -1,5 +1,9 @@
 package com.fc.msp.mspalert;
 
+import org.junit.Test;
+import org.springframework.boot.SpringBootVersion;
+import org.springframework.core.SpringVersion;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,5 +27,11 @@ public class TempTest {
             System.out.print(method);
             System.out.println(mapping);
         });
+    }
+    @Test
+    public void TestspringVersionAndspringBootVersion (){
+        String springVersion = SpringVersion.getVersion();
+        String springBootVersion = SpringBootVersion.getVersion();
+        System.out.println(springVersion + "    "   + springBootVersion);
     }
 }

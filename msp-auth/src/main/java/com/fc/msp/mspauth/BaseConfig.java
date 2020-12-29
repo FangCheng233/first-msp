@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @Version 1.0
  */
 @Component
-//@EnableApolloConfig("application")
+@EnableApolloConfig("application")
 public class BaseConfig implements Serializable {
     @Value("${value1}")
     public String value1;

@@ -1,8 +1,6 @@
 package com.fc.msp.mspalert.service;
 
 import com.alibaba.fastjson.JSONException;
-import com.fc.msp.config.AlertPushConfig;
-import com.fc.msp.config.ApolloConfiguration;
 import com.fc.msp.config.ConfigurationProperties;
 import com.fc.msp.mspalert.entity.Alert;
 import com.fc.msp.mspalert.entity.AlertInfo;
@@ -14,16 +12,16 @@ import com.fc.msp.mspalert.process.AlertFilter;
 import com.fc.msp.notify.email.SendMessage;
 import com.fc.msp.utils.MessageProcessing;
 import com.fc.msp.utils.RequestUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @ClassName WebHookService
@@ -32,47 +30,57 @@ import java.util.List;
  * @Date 2020/7/29 9:29 上午
  * @Version 1.0
  */
+@Slf4j
 @Component
 @Transactional(rollbackFor = Exception.class)
 public class WebHookService {
 
-    private static Logger log = LoggerFactory.getLogger(WebHookService.class);
-    @Autowired
+    @Value(value = "${enableEmail:false}")
+    private String enableEmail;
+    @Value(value = "${enableSMS:false}")
+    private String enableSMS;
+    @Value(value = "${enableWeChat:false}")
+    private String enableWeChat;
+
     AlertFilter alertFilter;
-    @Autowired
     SendMessage sendMessage;
-    @Resource
-    AlertPushConfig alertPushConfig;
-    @Autowired
     MessageProcessing messageProcessing;
-    @Autowired
     AlertInfoMapper alertInfoMapper;
-    @Autowired
     AlertMsgInfoMapper alertMsgInfoMapper;
 
-    @Resource
-    ApolloConfiguration apolloConfiguration;
+    public WebHookService(final AlertFilter alertFilter, SendMessage sendMessage, MessageProcessing messageProcessing, AlertInfoMapper alertInfoMapper, AlertMsgInfoMapper alertMsgInfoMapper) {
+        this.alertFilter = alertFilter;
+        this.sendMessage = sendMessage;
+        this.messageProcessing = messageProcessing;
+        this.alertInfoMapper = alertInfoMapper;
+        this.alertMsgInfoMapper = alertMsgInfoMapper;
+    }
 
     private static String STATUS = "0";
     @Async
-    public void dealWithMsg(String alertMsg){
+    public String dealWithMsg(String alertMsg){
         Alerts alerts = parseAlertMsg2Alerts(alertMsg);
         boolean isAvailable = verifyAlerts(alerts);
         if(!isAvailable){
             log.info("告警信息为空，该条告警不做后续处理");
-            return;
+            return "false";
         }
         AlertMsgInfo alertMsgInfo = new AlertMsgInfo();
         alertMsgInfo.setAlertMsg(alertMsg);
         alertMsgInfoMapper.insert(alertMsgInfo);
+        Queue<AlertMsgInfo> alertMsgInfos = new LinkedBlockingQueue<>();
+        alertMsgInfos.add(alertMsgInfo);
         Integer alertMsgId = alertMsgInfo.getId();
         List<Alert> alertList = alerts.getAlerts();
+        // 由于存在单条告警信息过大的情况，因此需要多线程处理告警信息
         for(Alert alert : alertList){
             saveAlert(alert, alertMsgId);
+
             if(alertFilter.pushFilter(alert)){
                 pushMsg(alert);
             }
         }
+        return "success";
     }
     /**
      *
@@ -85,13 +93,13 @@ public class WebHookService {
      */
     public void pushMsg(Alert alert){
         String sendMSG = messageProcessing.parseAlert2MSG(alert);
-        if(alertPushConfig.getEnableEmail().equals("true")){
+        if("true".equals(enableEmail)){
             sendMessage.sendDirectMessage(sendMSG);
         }
-        if(alertPushConfig.getEnableSMS().equals("true")){
+        if("true".equals(enableSMS)){
 
         }
-        if(alertPushConfig.getEnableWeChat().equals("true")){
+        if("true".equals(enableWeChat)){
 
         }
     }

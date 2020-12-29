@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface AlertInfoMapper {
-    @Insert("insert into")
+
     int insert(AlertInfo alertInfo);
 }

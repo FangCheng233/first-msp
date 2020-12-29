@@ -2,8 +2,8 @@ package com.fc.msp.notify.email;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,8 +21,16 @@ import java.util.UUID;
 @Component
 public class SendMessage {
 
+    /**
+     * @Description 使用RabbitTemplate,这提供了接收/发送等等方法
+     */
     @Autowired
-    RabbitTemplate rabbitTemplate;  //使用RabbitTemplate,这提供了接收/发送等等方法
+    RabbitTemplate rabbitTemplate;
+
+    @Value(value = "${routingKey:TestDirectRouting}")
+    private String routingKey;
+    @Value(value = "${exchange:TestDirectExchange}")
+    private String exchange;
 
     public String sendDirectMessage(String msg) {
         String messageId = String.valueOf(UUID.randomUUID());
@@ -32,7 +40,7 @@ public class SendMessage {
         map.put("messageData",msg);
         map.put("createTime",createTime);
         //将消息携带绑定键值：TestDirectRouting 发送到交换机TestDirectExchange
-        rabbitTemplate.convertAndSend("TestDirectExchange", "TestDirectRouting", map);
+        rabbitTemplate.convertAndSend(exchange, routingKey, map);
         return "ok";
     }
 

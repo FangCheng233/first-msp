@@ -15,7 +15,7 @@ import java.util.Map;
  * @Date 2020/7/29 1:19 下午
  * @Version 1.0
  */
-//@Component
+@Component
 public class UserConfig {
 
 

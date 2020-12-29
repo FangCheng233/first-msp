@@ -35,8 +35,8 @@ public class RedisCache implements Cache {
          * @throws IOException
          */
         public static byte[] ser(Object obj) throws IOException {
-            ByteArrayOutputStream baos=new ByteArrayOutputStream();
-            ObjectOutputStream obos=new ObjectOutputStream(baos);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream obos = new ObjectOutputStream(baos);
             obos.writeObject(obj);
             return baos.toByteArray();
         }
@@ -61,21 +61,30 @@ public class RedisCache implements Cache {
     public RedisCache(String id){
         if(jp==null){
             try {
-                GenericObjectPoolConfig gopc=new GenericObjectPoolConfig();
+                GenericObjectPoolConfig gopc = new GenericObjectPoolConfig();
                 gopc.setMaxTotal(100);
                 gopc.setMaxIdle(10);
-                jp=new JedisPool(gopc, "192.168.1.103",16379,10000,null,3);
+                jp = new JedisPool(gopc, "192.168.1.103",16379,10000,null,3);
                 //去数据库连接一下，这样出错就会抛异常
                 Jedis jedis = jp.getResource();
                 jp.returnResourceObject(jedis);
             } catch (Exception e) {
                 //e.printStackTrace();
-                jp=null;
+                jp = null;
             }
         }
         this.id=id;
     }
 
+    public static void main(String[] args) {
+        GenericObjectPoolConfig gopc = new GenericObjectPoolConfig();
+        gopc.setMaxTotal(100);
+        gopc.setMaxIdle(10);
+        gopc.setMaxWaitMillis(60000);
+        JedisPool jedisPool =  new JedisPool(gopc, "192.168.31.43",16379,60000,null,3);
+        Jedis jedis = jedisPool.getResource();
+
+    }
     /**
      * 清空所有的缓存
      */
@@ -132,8 +141,8 @@ public class RedisCache implements Cache {
      */
     @Override
     public int getSize() {
-        Jedis jedis=jp.getResource();
-        Set<String> allElements=jedis.keys("*");
+        Jedis jedis = jp.getResource();
+        Set<String> allElements = jedis.keys("*");
         return allElements.size();
     }
 

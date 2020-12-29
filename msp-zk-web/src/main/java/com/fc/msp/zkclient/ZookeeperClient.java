@@ -41,24 +41,31 @@ public class ZookeeperClient {
      */
     public void connect(){
         try {
-            client = new ZooKeeper(zkUrl, timeout,new ZookeeperClientWatcher());
+            client = new ZooKeeper(zkUrl, timeout,new ZookeeperClientWatcher(this));
         }catch (IOException exception){
             log.warn("zookeeper客户端连接异常，异常原因为{}", exception.getMessage());
         }
         ZKClientFactory.concurrentHashMap.put(env, client);
     }
     public static class ZookeeperClientWatcher implements Watcher {
+        private ZookeeperClient zookeeperClient;
+        public ZookeeperClientWatcher(ZookeeperClient zookeeperClient) {
+            this.zookeeperClient = zookeeperClient;
+        }
 
         @Override
         public void process(WatchedEvent watchedEvent) {
             if (watchedEvent.getState() == Event.KeeperState.Expired) {
                 close();
-
             }
             if(watchedEvent.getState() == Event.KeeperState.Disconnected){
 
             }
+            if(watchedEvent.getState() == Event.KeeperState.Closed){
+                zookeeperClient.connect();
+            }
             if (watchedEvent.getState() == Event.KeeperState.SyncConnected) {
+                log.info("Zookeeper连接成功");
                 if(countDownLatch!=null){
                     countDownLatch.countDown();
                 }

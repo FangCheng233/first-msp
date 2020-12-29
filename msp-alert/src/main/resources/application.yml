@@ -1,39 +1,9 @@
 spring:
   application:
     name: msp-alert
-  profiles:
-    active: prop1
-  rabbitmq:
-    host: 192.168.1.103
-    port: 5672
-    username: rabbit
-    password: rabbit
-  datasource:
-    url: jdbc:mysql://192.168.1.103:3306/MSPDB?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true
-    username: mspuser
-    password: MyPass@123
-    type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      connection-timeout: 30000           # 等待连接池分配连接的最大时长
-      minimum-idle: 5                     # 最小连接数
-      maximum-pool-size: 200              # 最大连接数
-      auto-commit: true                   # 自动提交
-      idle-timeout: 600000                # 默认10分钟
-      max-lifetime: 1800000               # 连接的生命时长，超时且没有被使用则被释放，默认：30分钟
-      pool-name: DataSourceHikariCP       # 连接池名称
-      connection-test-query: SELECT 1
 
 mybatis:
   type-aliases-package: com.fc.msp.mspalert.entity
   mapper-locations: classpath:mapper/*.xml
-
-eureka:
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://192.168.1.103:11111/eureka, http://192.168.1.103:21111/eureka
-  instance:
-    lease-expiration-duration-in-seconds: 10
-    prefer-ip-address: true
+server:
+  port: 5002
