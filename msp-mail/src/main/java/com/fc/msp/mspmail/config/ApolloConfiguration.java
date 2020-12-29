@@ -24,8 +24,8 @@ import java.util.Set;
  * @Date 2020/7/29 8:20 上午
  * @Version 1.0
  */
-@Component
-@Configuration
+//@Component
+//@Configuration
 public class ApolloConfiguration {
 
     @ApolloConfig("subscription")

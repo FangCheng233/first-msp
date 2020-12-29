@@ -8,7 +8,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://192.168.1.103:11111/eureka, http://192.168.1.103:21111/eureka
+      defaultZone: http://fcstudev.com:8080/eureka
   instance:
     lease-expiration-duration-in-seconds: 10
     prefer-ip-address: true

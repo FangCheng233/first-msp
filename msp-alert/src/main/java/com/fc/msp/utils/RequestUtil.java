@@ -1,13 +1,10 @@
 package com.fc.msp.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.fc.msp.mspalert.entity.Alerts;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
-import java.io.IOException;
 
 /**
  * @ClassName RequestUtil

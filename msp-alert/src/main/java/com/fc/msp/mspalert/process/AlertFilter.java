@@ -4,6 +4,7 @@ import com.fc.msp.mspalert.entity.Alert;
 import com.fc.msp.mspalert.entity.Alerts;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -25,7 +26,17 @@ public class AlertFilter {
      * @Date 2020/7/29 10:33 上午
      */
     public boolean pushFilter(Alert alert){
+            // 告警指标名称符合
+        if(alert.getLabels().getAlertname() == "" && alert.getLabels().getJob()==""){
+            return false;
+            // 告警名称且
+        }else if(alert.getLabels().getAlertname() == "" && alert.getLabels().getInstance() == ""){
+            return false;
+        }else if (alert.getLabels().getJob() == ""){
+            return false;
+        }else if(alert.getLabels().getJob() == ""){
 
+        }
 
         return true;
     }
